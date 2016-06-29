@@ -335,5 +335,72 @@
       <child link="${prefix}tool0"/>
     </joint>
 
+    <xacro:if value="$(arg ur5_camera_enabled)">
+
+      <joint name="${prefix}tool_mount_joint" type="fixed">
+        <origin xyz="0.0 ${wrist_3_length} 0.0" rpy="0.0 0.0 ${pi/2}" />
+        <parent link="${prefix}wrist_3_link" />
+        <child link = "${prefix}tool_mount_link" />
+      </joint>
+
+      <link name="${prefix}tool_mount_link">
+        <visual>
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 ${pi/2} 0.0" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5/visual/tool_mount.dae" />
+          </geometry>
+        </visual>
+        <collision>
+          <origin xyz="0.0 0.0 0.0" rpy="0.0 ${pi/2} 0.0" />
+          <geometry>
+            <mesh filename="package://ur_description/meshes/ur5/collision/tool_mount.stl" />
+          </geometry>
+        </collision>
+      </link>
+
+       <joint name="${prefix}camera_joint" type="fixed">
+         <origin xyz="0.11 0.0 0.055" rpy="0.0 0.0 0.0" />
+         <parent link="${prefix}tool_mount_link" />
+         <child link = "${prefix}camera_link" />
+       </joint>
+
+       <link name="${prefix}camera_link">
+         <visual>
+           <origin xyz="-0.11 0.0 0.0" rpy="0.0 -1.57 0.0" />
+           <geometry>
+             <mesh filename="package://ur_description/meshes/ur5/visual/camera.dae" />
+           </geometry>
+         </visual>
+         <collision>
+           <origin xyz="-0.11 0.0 0.0" rpy="0.0 -1.57 0.0" />
+           <geometry>
+             <mesh filename="package://ur_description/meshes/ur5/collision/camera.stl" />
+           </geometry>
+         </collision>
+       </link>
+
+       <joint name="${prefix}marker_joint" type="fixed">
+         <origin xyz="0.22 0.0 0.0" rpy="0.0 0.0 0.0" />
+         <parent link="${prefix}tool_mount_link" />
+         <child link = "${prefix}marker_link" />
+       </joint>
+
+       <link name="${prefix}marker_link">
+         <visual>
+           <origin xyz="-0.22 0.0 0.0" rpy="0.0 1.57 0.0" />
+           <geometry>
+             <mesh filename="package://ur_description/meshes/ur5/visual/marker.dae" />
+           </geometry>
+         </visual>
+         <collision>
+           <origin xyz="-0.22 0.0 0.0" rpy="0.0 1.57 0.0" />
+           <geometry>
+             <mesh filename="package://ur_description/meshes/ur5/collision/marker.stl" />
+           </geometry>
+         </collision>
+       </link>
+
+    </xacro:if>
+
   </xacro:macro>
 </robot>
